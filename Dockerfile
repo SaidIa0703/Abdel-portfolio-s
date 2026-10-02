@@ -1,5 +1,5 @@
 # ---------- 1. Build : génère le site statique dans /app/out ----------
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
