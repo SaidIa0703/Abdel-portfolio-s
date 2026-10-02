@@ -1,4 +1,4 @@
-name: Deploy
+name: CI
 
 on:
   push:
@@ -25,9 +25,12 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+  # Le site est déployé par Cloudflare Pages (connecté au dépôt).
+  # Ce job VPS (Docker + NGINX) ne tourne que sur déclenchement manuel.
   deploy:
     name: Déploiement sur le VPS
     needs: build
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: SSH vers le VPS, mise à jour et redémarrage du conteneur
